@@ -45,16 +45,20 @@ weatherForecast.onload = function () {
         fObj = JSON.parse(weatherForecast.responseText);
         console.log(fObj);
 
-        let date = fObj.list[0].dt_txt.substring(5, 11);
-        document.getElementById('r1c1').innerHTML = date;
 
-        var iconCode = fObj.list[0].weather[0].icon;
-        var iconPath = 'http://openweathermap.org/img/w/' + iconCode + '.png';
-        document.getElementById('r1c2').src = iconPath;
-        document.getElementById('r1c3').innerHTML = fObj.list[0].main.temp_min;
-        document.getElementById('r1c3').innerHTML = fObj.list[0].main.temp_max;
+        let nextWeek = 0;
+        for (let i = 0; i < 3; i++) {
 
+            let date = fObj.list[nextWeek].dt_txt.substring(5, 11);
+            document.getElementById('r1c1').innerHTML = date;
 
+            var iconCode = fObj.list[nextWeek].weather[0].icon;
+            var iconPath = 'http://openweathermap.org/img/w/' + iconCode + '.png';
+            document.getElementById('r' + (i + 1) + 'c2').src = iconPath;
+            document.getElementById('r' + (i + 1) + 'c3').innerHTML = fObj.list[nextWeek].main.temp_min + "&#176;";
+            document.getElementById('r' + (i + 1) + 'c4').innerHTML = fObj.list[nextWeek].main.temp_max + "&#176;";
+            nextWeek += 9;
+        }
 
     } //end if
 }; //end function
